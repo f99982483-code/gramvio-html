@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GRAMVIO – Instagram Growth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+button {
+  background: #7b2cff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #5e1fd1;
+}
+.hidden {
+  display: none;
+}
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- STEP 1 -->
+  <div id="step1">
+    <h2>GRAMVIO</h2>
+
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="tel" id="mobile" placeholder="Mobile Number" required>
+    <input type="text" id="instagram" placeholder="Instagram Username" required>
+
+    <button onclick="goToStep2()">Submit</button>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" class="hidden">
+    <h2>Select Followers</h2>
+
+    <select id="followers" onchange="updatePrice()">
+      <option value="">Choose Followers</option>
+      <option value="1000">1K Followers</option>
+      <option value="2000">2K Followers</option>
+      <option value="5000">5K Followers</option>
+      <option value="10000">10K Followers</option>
+    </select>
+
+    <div class="price" id="price">Amount: ₹0</div>
+
+    <button onclick="goToStep3()">Proceed to Payment</button>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" class="hidden">
+    <h2>Payment</h2>
+
+    <p><b>Name:</b> <span id="pname"></span></p>
+    <p><b>Instagram:</b> <span id="pinsta"></span></p>
+    <p><b>Followers:</b> <span id="pfollowers"></span></p>
+    <p class="price">Payable Amount: ₹<span id="pamount"></span></p>
+
+    <button onclick="paymentSuccess()">Pay Now</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" class="hidden">
+    <h2>✅ Payment Successful</h2>
+    <p>Your order has been received.</p>
+    <p>Thank you for choosing <b>GRAMVIO</b>.</p>
+  </div>
+
+  <div class="footer">
+    © 2026 GRAMVIO
+  </div>
+
+</div>
+
+<script>
+let amount = 0;
+
+function goToStep2() {
+  if (
+    document.getElementById("name").value === "" ||
+    document.getElementById("mobile").value === "" ||
+    document.getElementById("instagram").value === ""
+  ) {
+    alert("Please fill all details");
+    return;
+  }
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
+}
+
+function updatePrice() {
+  const followers = document.getElementById("followers").value;
+
+  if (followers == "1000") amount = 25;
+  else if (followers == "2000") amount = 50;
+  else if (followers == "5000") amount = 125;
+  else if (followers == "10000") amount = 250;
+  else amount = 0;
+
+  document.getElementById("price").innerText = "Amount: ₹" + amount;
+}
+
+function goToStep3() {
+  if (amount === 0) {
+    alert("Please select followers");
+    return;
+  }
+
+  document.getElementById("step2").classList.add("hidden");
+  document.getElementById("step3").classList.remove("hidden");
+
+  document.getElementById("pname").innerText =
+    document.getElementById("name").value;
+  document.getElementById("pinsta").innerText =
+    document.getElementById("instagram").value;
+  document.getElementById("pfollowers").innerText =
+    document.getElementById("followers").value;
+  document.getElementById("pamount").innerText = amount;
+}
+
+function paymentSuccess() {
+  document.getElementById("step3").classList.add("hidden");
+  document.getElementById("success").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
