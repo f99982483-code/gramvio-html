@@ -11,7 +11,7 @@
       padding: 20px;
     }
     .card {
-      max-width: 400px;
+      max-width: 420px;
       background: #fff;
       margin: auto;
       padding: 20px;
@@ -23,25 +23,32 @@
     }
     input, select, button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 10px;
       font-size: 16px;
     }
     button {
-      background: #28a745;
-      color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
+      color: #fff;
+    }
+    .phonepe {
+      background: #5f259f;
+    }
+    .gpay {
+      background: #000;
+      margin-top: 10px;
     }
     .amount {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 18px;
       text-align: center;
+      font-weight: bold;
     }
     .note {
       margin-top: 15px;
-      font-size: 13px;
+      font-size: 12px;
       color: #555;
       text-align: center;
     }
@@ -52,9 +59,9 @@
 <div class="card">
   <h2>GRAMVIO</h2>
 
-  <input type="text" placeholder="Your Name" required>
-  <input type="tel" placeholder="Mobile Number" required>
-  <input type="text" placeholder="Instagram ID" required>
+  <input type="text" id="name" placeholder="Your Name" required>
+  <input type="tel" id="mobile" placeholder="Mobile Number" required>
+  <input type="text" id="insta" placeholder="Instagram ID" required>
 
   <select id="followers" onchange="setAmount()" required>
     <option value="">Select Followers</option>
@@ -68,10 +75,12 @@
     Amount: ₹<span id="amount">0</span>
   </div>
 
-  <button onclick="payNow()">Pay Now</button>
+  <button class="phonepe" onclick="payNow()">Pay with PhonePe</button>
+  <button class="gpay" onclick="payNow()">Pay with Google Pay</button>
 
   <div class="note">
-    After payment, status will be <b>Pending Verification</b>
+    After payment, status will be <b>Pending Verification</b><br>
+    If another UPI app opens, you can safely continue payment.
   </div>
 </div>
 
@@ -89,9 +98,9 @@ function payNow() {
     return;
   }
 
-  // ✅ YOUR UPI ID (FINAL)
-  const upiId = "56300156@ybl";
-  const payeeName = "SAMANTHAPUDI SAI SIVA VENKATA DURGA PRASAD";
+  // ✅ YOUR FINAL UPI ID
+  const upiId = "8688752652-3@ybl";
+  const payeeName = "GRAMVIO";
 
   const upiLink =
     `upi://pay?pa=${upiId}&pn=${payeeName}&am=${amount}&cu=INR`;
@@ -99,11 +108,12 @@ function payNow() {
   window.location.href = upiLink;
 
   setTimeout(() => {
-    alert("Payment initiated.\nPlease complete payment in your UPI app.\nStatus: Pending verification");
-  }, 1000);
+    alert(
+      "Payment initiated.\nPlease complete payment in your UPI app.\nStatus: Pending verification"
+    );
+  }, 800);
 }
 </script>
 
 </body>
 </html>
-
