@@ -1,170 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>GRAMVIO – Instagram Growth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-  padding: 0;
-}
-.container {
-  max-width: 420px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-input, select, button {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-button {
-  background: #7b2cff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background: #5e1fd1;
-}
-.hidden {
-  display: none;
-}
-.price {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
-}
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  margin-top: 15px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>GRAMVIO - Buy Instagram Followers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    .card {
+      max-width: 400px;
+      background: #fff;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .amount {
+      margin-top: 10px;
+      font-size: 18px;
+      text-align: center;
+    }
+    .note {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="card">
+  <h2>GRAMVIO</h2>
 
-  <!-- STEP 1 -->
-  <div id="step1">
-    <h2>GRAMVIO</h2>
+  <input type="text" placeholder="Your Name" required>
+  <input type="tel" placeholder="Mobile Number" required>
+  <input type="text" placeholder="Instagram ID" required>
 
-    <input type="text" id="name" placeholder="Your Name" required>
-    <input type="tel" id="mobile" placeholder="Mobile Number" required>
-    <input type="text" id="instagram" placeholder="Instagram Username" required>
+  <select id="followers" onchange="setAmount()" required>
+    <option value="">Select Followers</option>
+    <option value="25">1K Followers - ₹25</option>
+    <option value="50">2K Followers - ₹50</option>
+    <option value="125">5K Followers - ₹125</option>
+    <option value="250">10K Followers - ₹250</option>
+  </select>
 
-    <button onclick="goToStep2()">Submit</button>
+  <div class="amount">
+    Amount: ₹<span id="amount">0</span>
   </div>
 
-  <!-- STEP 2 -->
-  <div id="step2" class="hidden">
-    <h2>Select Followers</h2>
+  <button onclick="payNow()">Pay Now</button>
 
-    <select id="followers" onchange="updatePrice()">
-      <option value="">Choose Followers</option>
-      <option value="1000">1K Followers</option>
-      <option value="2000">2K Followers</option>
-      <option value="5000">5K Followers</option>
-      <option value="10000">10K Followers</option>
-    </select>
-
-    <div class="price" id="price">Amount: ₹0</div>
-
-    <button onclick="goToStep3()">Proceed to Payment</button>
+  <div class="note">
+    After payment, status will be <b>Pending Verification</b>
   </div>
-
-  <!-- STEP 3 -->
-  <div id="step3" class="hidden">
-    <h2>Payment</h2>
-
-    <p><b>Name:</b> <span id="pname"></span></p>
-    <p><b>Instagram:</b> <span id="pinsta"></span></p>
-    <p><b>Followers:</b> <span id="pfollowers"></span></p>
-    <p class="price">Payable Amount: ₹<span id="pamount"></span></p>
-
-    <button onclick="paymentSuccess()">Pay Now</button>
-  </div>
-
-  <!-- SUCCESS -->
-  <div id="success" class="hidden">
-    <h2>✅ Payment Successful</h2>
-    <p>Your order has been received.</p>
-    <p>Thank you for choosing <b>GRAMVIO</b>.</p>
-  </div>
-
-  <div class="footer">
-    © 2026 GRAMVIO
-  </div>
-
 </div>
 
 <script>
-let amount = 0;
-
-function goToStep2() {
-  if (
-    document.getElementById("name").value === "" ||
-    document.getElementById("mobile").value === "" ||
-    document.getElementById("instagram").value === ""
-  ) {
-    alert("Please fill all details");
-    return;
-  }
-  document.getElementById("step1").classList.add("hidden");
-  document.getElementById("step2").classList.remove("hidden");
+function setAmount() {
+  document.getElementById("amount").innerText =
+    document.getElementById("followers").value;
 }
 
-function updatePrice() {
-  const followers = document.getElementById("followers").value;
+function payNow() {
+  const amount = document.getElementById("followers").value;
 
-  if (followers == "1000") amount = 25;
-  else if (followers == "2000") amount = 50;
-  else if (followers == "5000") amount = 125;
-  else if (followers == "10000") amount = 250;
-  else amount = 0;
-
-  document.getElementById("price").innerText = "Amount: ₹" + amount;
-}
-
-function goToStep3() {
-  if (amount === 0) {
+  if (amount === "") {
     alert("Please select followers");
     return;
   }
 
-  document.getElementById("step2").classList.add("hidden");
-  document.getElementById("step3").classList.remove("hidden");
+  // ✅ YOUR UPI ID (FINAL)
+  const upiId = "8688752652-3@ybl";
+  const payeeName = "GRAMVIO";
 
-  document.getElementById("pname").innerText =
-    document.getElementById("name").value;
-  document.getElementById("pinsta").innerText =
-    document.getElementById("instagram").value;
-  document.getElementById("pfollowers").innerText =
-    document.getElementById("followers").value;
-  document.getElementById("pamount").innerText = amount;
-}
+  const upiLink =
+    `upi://pay?pa=${upiId}&pn=${payeeName}&am=${amount}&cu=INR`;
 
-function paymentSuccess() {
-  document.getElementById("step3").classList.add("hidden");
-  document.getElementById("success").classList.remove("hidden");
+  window.location.href = upiLink;
+
+  setTimeout(() => {
+    alert("Payment initiated.\nPlease complete payment in your UPI app.\nStatus: Pending verification");
+  }, 1000);
 }
 </script>
 
